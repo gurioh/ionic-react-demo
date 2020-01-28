@@ -27,7 +27,7 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 
 import ContextSample from './pages/ContextSample';
-import Categories from './pages/Categories';
+// import Categories from './pages/Categories';
 import MainBoard from './pages/MainBoard';
 
 const App: React.FC = () => {
@@ -50,3 +50,12 @@ const App: React.FC = () => {
 }
 
 export default App;
+
+// const IonicAppConnected = connect<{}, StateProps, DispatchProps>({
+//   mapStateToProps: (state) => ({
+//     darkMode: state.user.darkMode,
+//     sessions: state.data.sessions
+//   }),
+//   mapDispatchToProps: { loadConfData, loadUserData, setIsLoggedIn, setUsername },
+//   component: IonicApp
+// });

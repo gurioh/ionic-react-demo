@@ -1,5 +1,5 @@
 import React from "react";
-import ItemList from "./Article/ItemList"
+import ItemList from "../components/ItemList"
 import { IonPage, IonHeader, IonToolbar, IonButtons, IonMenuButton, IonTitle, IonContent, IonList, IonGrid, IonRow, IonCol } from "@ionic/react";
 
 
@@ -12,7 +12,7 @@ const MainBoard = () => {
           <IonButtons slot="start">
             <IonMenuButton />
           </IonButtons>
-          <IonTitle>게시판</IonTitle>
+          <IonTitle>Board</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
