@@ -26,12 +26,11 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
-import ContextSample from './pages/ContextSample';
 import { connect } from './data/connect';
 // import Categories from './pages/Categories';
-import MainBoard from './pages/MainBoard';
 import { AppContextProvider } from './data/AppContext';
 import { loadConfData } from './data/sessions/sessions.actions';
+import MainTabs from './pages/MainTabs';
 
 const App: React.FC = () => {
   return (
@@ -59,11 +58,12 @@ const IonicApp: React.FC<IonicAppProps> = ({ darkMode, loadConfData }) => {
   }, []);
 
   return (
-        <IonApp className={`${darkMode ? 'dark-theme' : ''}`}>
+        <IonApp>
           <IonReactRouter>
             <IonSplitPane contentId="main">
               <IonRouterOutlet id="main">
-                <Route path="/tabs" component={MainBoard} />
+                {/* <Route path="/" component={Categories}/> */}
+                <Route path="/" component={MainTabs}/>
               </IonRouterOutlet>
             </IonSplitPane>
           </IonReactRouter>

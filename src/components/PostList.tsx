@@ -4,10 +4,10 @@ import PostCard from "./PostCard"
 
 
 
-const ItemList = () => {
+const PostList = () => {
   return (
     <PostCard/>
   );
 }
 
-export default ItemList;
+export default PostList;

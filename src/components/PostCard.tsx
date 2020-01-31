@@ -8,7 +8,7 @@ const PostCard = () => {
   return (
     <IonCard className="speaker-card">
       <IonCardHeader>
-        <IonItem button detail={false} lines="none">
+        <IonItem button detail={false} routerLink={`/tabs/theme`} lines="none">
           <IonAvatar slot="start">
           </IonAvatar>
         </IonItem>

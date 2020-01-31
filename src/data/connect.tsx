@@ -4,8 +4,11 @@ import { DispatchObject } from '../util/types';
 import { AppState } from './state';
 
 interface ConnectParams<TOwnProps, TStateProps, TDispatchProps> {
+  //Store가 가진 state를 어떻게 props에 엮을 지 정한다(이 동작을 정의하는 함수는 mapStateToProps라고 불립니다)
   mapStateToProps?: (state: AppState, props: TOwnProps) => TStateProps,
+  //Reducer에 action을 알리는 함수 dispatch를 어떻게 props에 엮을 지 정한다(이 동작을 정의하는 함수는 mapDispatchToProps라고 불립니다)
   mapDispatchToProps?: TDispatchProps,
+  //위에 두가지가 적용된 props를 받을 Component를 정한다
   component: React.ComponentType<any>
 };
 
