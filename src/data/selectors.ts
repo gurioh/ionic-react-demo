@@ -16,3 +16,4 @@ export const getPost = createSelector(
   getPosts, getIdParam,
   (posts, id) => posts.find(x => x.id === id)
 );
+

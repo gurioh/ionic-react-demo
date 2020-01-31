@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
-import { IonPage, IonHeader, IonToolbar, IonButtons, IonMenuButton, IonTitle, IonContent, IonList, IonGrid, IonRow, IonCol, IonTabBar, IonTabButton, IonIcon, IonLabel } from "@ionic/react";
+import { IonPage, IonHeader, IonToolbar, IonButtons, IonMenuButton, IonTitle, IonContent, IonList, IonGrid, IonRow, IonCol, IonTabBar, IonTabButton, IonIcon, IonLabel, IonButton } from "@ionic/react";
 import { connect } from "../data/connect";
 import { calendar, contacts, map, informationCircle, addCircle } from 'ionicons/icons';
 
 import * as selectors from '../data/selectors';
 import { Post } from "../models/post";
 import PostList from "../components/PostList";
+import { addPost } from "../data/sessions/sessions.actions";
 
 interface OwnProps { };
 
@@ -13,20 +14,14 @@ interface StateProps {
   posts: Post[];
 };
 
-interface DispatchProps { };
+interface DispatchProps {
+  addPost: typeof addPost
+ };
 
 interface PostListProps extends OwnProps, StateProps, DispatchProps { };
- 
-const MainView = ({posts}:PostListProps) => {
-  useEffect(() => {
-    console.log("useEffect")
-    posts.map(post => (
-      console.log(post.id)
-    ));
-    return ()=>{
-      console.log('clean')
-    }
-  });
+
+const MainView = ({ posts, addPost }: PostListProps) => {
+
   return (
     <IonPage>
       <IonHeader>
@@ -41,24 +36,27 @@ const MainView = ({posts}:PostListProps) => {
         <IonList>
           <IonGrid fixed>
             <IonRow align-items-stretch>
-              
+
               {posts.map(post => (
                 <IonCol size="12" size-md="6" key={post.id}>
-                  <PostList/>
+                  <PostList />
                 </IonCol>
               ))}
             </IonRow>
           </IonGrid>
         </IonList>
       </IonContent>
-      
+
     </IonPage>
   );
 }
 
 export default connect<OwnProps, StateProps, DispatchProps>({
   mapStateToProps: (state) => ({
-    posts: selectors.getPosts(state),
+    posts: selectors.getPosts(state)
   }),
+  mapDispatchToProps: {
+    addPost
+  },
   component: React.memo(MainView)
 });

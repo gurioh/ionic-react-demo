@@ -6,5 +6,8 @@ export const sessionsReducer = (state: SessionsState, action: SessionsActions): 
     case 'set-conf-data': {
       return { ...state, ...action.data };
     }
+    case 'add-post': {
+      return { ...state, posts: [...(state.posts), action.data] };
+    }
   }
 }
