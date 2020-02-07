@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { IonPage, IonHeader, IonToolbar, IonButtons, IonMenuButton, IonTitle, IonContent, IonList, IonGrid, IonRow, IonCol, IonTabBar, IonTabButton, IonIcon, IonLabel, IonBackButton, IonItem, IonInput, IonText, IonButton, IonItemDivider, IonTextarea, IonRippleEffect } from "@ionic/react";
 import { addPost } from "../data/sessions/sessions.actions";
 import { Post } from "../models/post";
@@ -18,6 +18,8 @@ interface DispatchProps {
 interface PostProps extends OwnProps, StateProps, DispatchProps { };
 
 const CreateTheme = ({ posts, addPost }: PostProps) => {
+    const [title, setTitle] = useState('');
+    const [content, setContent] = useState('');
     const data: Post = {
         id: 6,
         name: "string",
@@ -29,8 +31,17 @@ const CreateTheme = ({ posts, addPost }: PostProps) => {
         phone: "string"
     }
 
-    const addPostData = () => addPost(data)
-
+    const addPostData = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (title && content) {
+            console.log(title)
+        }
+        data.name = title
+        data.about = content
+        addPost(data)
+        console.log(data)
+        console.log('push')
+    }
     return (
         <IonPage>
             <IonHeader>
@@ -43,10 +54,10 @@ const CreateTheme = ({ posts, addPost }: PostProps) => {
             </IonHeader>
             <IonContent>
                 <IonContent>
-                    <div>
+                    <form noValidate onSubmit={addPostData}>
                         <IonItem>
                             <IonLabel> Title</IonLabel>
-                            <IonInput name="username" type="text" spellCheck={false} autocapitalize="off" required> </IonInput>
+                            <IonInput name="title" type="text" value={title} onIonChange={e => setTitle(e.detail.value!)} spellCheck={false} autocapitalize="off" required> </IonInput>
                         </IonItem>
                         <IonItemDivider>
                             <IonLabel>
@@ -55,20 +66,10 @@ const CreateTheme = ({ posts, addPost }: PostProps) => {
                         </IonItemDivider>
                         <IonItem>
                             <IonLabel position="floating">Description</IonLabel>
-                            <IonTextarea></IonTextarea>
+                            <IonTextarea name="content" value={content} onIonChange={e => setContent(e.detail.value!)}></IonTextarea>
                         </IonItem>
-                        <IonText color="danger">
-                            <p className="ion-padding-start">
-                                IonText
-                            </p>
-                        </IonText>
-
-                    </div>
-                    <div className="ion-activatable">
-                        A plain div with a bounded ripple effect
-                        <IonRippleEffect></IonRippleEffect>
-                    </div>
-                    <IonButton onClick={() => addPostData()}>ADD</IonButton>
+                        <IonButton type="submit" expand="block">Add</IonButton>
+                    </form>
                 </IonContent>
             </IonContent>
         </IonPage>
