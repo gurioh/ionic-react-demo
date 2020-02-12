@@ -1,6 +1,6 @@
 import React, { useEffect, useState, Props } from "react";
 import { IonPage, IonHeader, IonToolbar, IonButtons, IonMenuButton, IonTitle, IonContent, IonList, IonGrid, IonRow, IonCol, IonTabBar, IonTabButton, IonIcon, IonLabel, IonBackButton, IonItem, IonInput, IonText, IonButton, IonItemDivider, IonTextarea, IonRippleEffect } from "@ionic/react";
-import { addPost } from "../data/sessions/sessions.actions";
+import { addPost, editPost } from "../data/sessions/sessions.actions";
 import { Post } from "../models/post";
 import { connect } from "../data/connect";
 import "./CreatePost.scss";
@@ -15,11 +15,12 @@ interface StateProps {
 
 interface DispatchProps {
     addPost: typeof addPost
+    editPost: typeof editPost
 };
 
 interface PostProps extends OwnProps, StateProps, DispatchProps { };
 
-const CreateTheme = ({ addPost}: PostProps) => {
+const CreateTheme = ({ addPost, editPost}: PostProps) => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const history = useHistory()
@@ -64,6 +65,7 @@ const CreateTheme = ({ addPost}: PostProps) => {
                             <IonTextarea name="content" value={content} onIonChange={e => setContent(e.detail.value!)}></IonTextarea>
                         </IonItem>
                         <IonButton type="submit" expand="block">Add</IonButton>
+                        <IonButton onClick = {() => editPost(data)}> Delete</IonButton>
                     </form>
                 </IonContent>
             </IonContent>
@@ -73,7 +75,8 @@ const CreateTheme = ({ addPost}: PostProps) => {
 
 export default connect<OwnProps, StateProps, DispatchProps>({
     mapDispatchToProps: {
-        addPost
+        addPost,
+        editPost
     },
     component: React.memo(CreateTheme)
 });

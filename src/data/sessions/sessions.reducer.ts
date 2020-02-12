@@ -13,5 +13,8 @@ export const sessionsReducer = (state: SessionsState, action: SessionsActions): 
     case 'delete-post': {
       return { ...state, posts: [...(state.posts).filter(x => x.id !== action.id)] };
     }
+    case 'edit-post': {
+      return { ...state, posts: state.posts.splice(action.data.id, 1, action.data) };
+    }
   }
 }

@@ -2,8 +2,7 @@ import React from "react";
 import { IonCard, IonCardHeader, IonItem, IonCardContent, IonAvatar, IonReorder, IonLabel, IonReorderGroup, IonBadge, IonButton } from "@ionic/react";
 import { ItemReorderEventDetail } from '@ionic/core';
 import { Post } from "../models/post";
-import { deletePost } from "../data/sessions/sessions.actions";
-import { key } from "ionicons/icons";
+import { deletePost} from "../data/sessions/sessions.actions";
 
 interface StateProps {
   post: Post;
@@ -38,6 +37,7 @@ const PostCard = ({post, deletePost}: PostCardProps) => {
       <IonCardContent class="outer-content">
         <IonLabel>{post.content}</IonLabel>
         <IonButton onClick = {() => deletePost(post.id)}> Delete</IonButton>
+        <IonButton onClick = {() => deletePost(post.id)}> Edit</IonButton>
       </IonCardContent>
     </IonCard>
   );

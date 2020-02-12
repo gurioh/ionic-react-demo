@@ -24,7 +24,13 @@ export const deletePost = (id: number) => ({
   id
 } as const)
 
+export const editPost = (data: Post) => ({
+  type: 'edit-post',
+  data
+} as const)
+
 export type SessionsActions =
   | ActionType<typeof setData>
   | ActionType<typeof addPost>
   | ActionType<typeof deletePost>
+  | ActionType<typeof editPost>

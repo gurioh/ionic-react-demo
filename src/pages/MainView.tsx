@@ -5,7 +5,7 @@ import { calendar, contacts, map, informationCircle, addCircle } from 'ionicons/
 
 import * as selectors from '../data/selectors';
 import { Post } from "../models/post";
-import { deletePost } from "../data/sessions/sessions.actions";
+import { deletePost, editPost } from "../data/sessions/sessions.actions";
 import PostCard from "../components/PostCard";
 
 interface OwnProps { };
@@ -16,11 +16,12 @@ interface StateProps {
 
 interface DispatchProps {
   deletePost: typeof deletePost
+  editPost: typeof editPost
  };
 
 interface PostListProps extends OwnProps, StateProps, DispatchProps { };
 
-const MainView = ({ posts,  deletePost }: PostListProps) => {
+const MainView = ({ posts,  deletePost, editPost }: PostListProps) => {
 
   return (
     <IonPage>
@@ -60,7 +61,8 @@ export default connect<OwnProps, StateProps, DispatchProps>({
     posts: selectors.getPosts(state)
   }),
   mapDispatchToProps: {
-    deletePost
+    deletePost,
+    editPost
   },
   component: React.memo(MainView)
 });
