@@ -1,14 +1,21 @@
 import React from "react";
-import { IonCard, IonCardHeader, IonItem, IonCardContent, IonAvatar, IonReorder, IonLabel, IonReorderGroup, IonBadge } from "@ionic/react";
+import { IonCard, IonCardHeader, IonItem, IonCardContent, IonAvatar, IonReorder, IonLabel, IonReorderGroup, IonBadge, IonButton } from "@ionic/react";
 import { ItemReorderEventDetail } from '@ionic/core';
 import { Post } from "../models/post";
+import { deletePost } from "../data/sessions/sessions.actions";
+import { key } from "ionicons/icons";
 
-
-interface ContentProps {
+interface StateProps {
   post: Post;
 }
 
-const PostCard = ({post}: ContentProps) => {
+interface DispatchProps {
+  deletePost: typeof deletePost;
+}
+
+
+interface PostCardProps extends StateProps, DispatchProps { };
+const PostCard = ({post, deletePost}: PostCardProps) => {
   function doReorder(event: CustomEvent<ItemReorderEventDetail>) {
     // The `from` and `to` properties contain the index of the item
     // when the drag started and ended, respectively
@@ -30,6 +37,7 @@ const PostCard = ({post}: ContentProps) => {
       </IonCardHeader>
       <IonCardContent class="outer-content">
         <IonLabel>{post.content}</IonLabel>
+        <IonButton onClick = {() => deletePost(post.id)}> Delete</IonButton>
       </IonCardContent>
     </IonCard>
   );

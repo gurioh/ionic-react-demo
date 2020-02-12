@@ -6,7 +6,6 @@ import { Post } from '../../models/post';
 export const loadConfData = () => async (dispatch: React.Dispatch<any>) => {
   const data = await getConfData();
   const test = await componentDidMount();
-  console.log(test)
   dispatch(setData(data));
 }
 
@@ -20,6 +19,12 @@ export const addPost = (data: Post) => ({
   data
 } as const)
 
+export const deletePost = (id: number) => ({
+  type: 'delete-post',
+  id
+} as const)
+
 export type SessionsActions =
   | ActionType<typeof setData>
   | ActionType<typeof addPost>
+  | ActionType<typeof deletePost>

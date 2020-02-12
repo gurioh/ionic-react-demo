@@ -11,7 +11,6 @@ import {     } from 'react-router-dom';
 interface OwnProps { };
 
 interface StateProps {
-    posts: Post[];
 };
 
 interface DispatchProps {
@@ -20,12 +19,12 @@ interface DispatchProps {
 
 interface PostProps extends OwnProps, StateProps, DispatchProps { };
 
-const CreateTheme = ({ posts, addPost}: PostProps) => {
+const CreateTheme = ({ addPost}: PostProps) => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const history = useHistory()
     const data: Post = {
-        id: posts.length+1,
+        id: 0,
         title: "",
         content: "",
     }
@@ -73,9 +72,6 @@ const CreateTheme = ({ posts, addPost}: PostProps) => {
 }
 
 export default connect<OwnProps, StateProps, DispatchProps>({
-    mapStateToProps: (state) => ({
-        posts: selectors.getPosts(state)
-      }),
     mapDispatchToProps: {
         addPost
     },

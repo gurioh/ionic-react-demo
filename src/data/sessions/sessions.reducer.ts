@@ -10,5 +10,8 @@ export const sessionsReducer = (state: SessionsState, action: SessionsActions): 
       action.data.id = state.posts.length+1
       return { ...state, posts: [...(state.posts), action.data] };
     }
+    case 'delete-post': {
+      return { ...state, posts: [...(state.posts).filter(x => x.id !== action.id)] };
+    }
   }
 }
