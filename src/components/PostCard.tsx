@@ -1,9 +1,14 @@
 import React from "react";
 import { IonCard, IonCardHeader, IonItem, IonCardContent, IonAvatar, IonReorder, IonLabel, IonReorderGroup, IonBadge } from "@ionic/react";
 import { ItemReorderEventDetail } from '@ionic/core';
+import { Post } from "../models/post";
 
 
-const PostCard = () => {
+interface ContentProps {
+  post: Post;
+}
+
+const PostCard = ({post}: ContentProps) => {
   function doReorder(event: CustomEvent<ItemReorderEventDetail>) {
     // The `from` and `to` properties contain the index of the item
     // when the drag started and ended, respectively
@@ -16,30 +21,16 @@ const PostCard = () => {
   }
 
   return (
-    <IonCard className="speaker-card">
+    <IonCard className="post-card">
       <IonCardHeader>
         <IonReorderGroup disabled={false} onIonItemReorder={doReorder}>
-          <IonItem button detail={false} routerLink={`/tabs/theme`} lines="none">
-            <IonLabel>Item 1</IonLabel>
-            <IonReorder slot="end" />
-          </IonItem>
-          <IonItem button detail={false} routerLink={`/tabs/theme`} lines="none">
-            <IonLabel>Item 2</IonLabel>
-            <IonReorder slot="end" />
-          </IonItem>
+          
         </IonReorderGroup>
+        <IonLabel>{post.title}</IonLabel>
       </IonCardHeader>
       <IonCardContent class="outer-content">
-        <h2> This is test contents</h2>
+        <IonLabel>{post.content}</IonLabel>
       </IonCardContent>
-      <IonBadge color="primary">11</IonBadge>
-      <IonBadge color="secondary">22</IonBadge>
-      <IonBadge color="tertiary">33</IonBadge>
-      <IonItem>
-        <IonBadge slot="start">11</IonBadge>
-        <IonLabel>My Item</IonLabel>
-        <IonBadge slot="end">22</IonBadge>
-      </IonItem>
     </IonCard>
   );
 }

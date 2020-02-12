@@ -1,10 +1,12 @@
-import { getConfData } from '../dataApi';
+import { getConfData, componentDidMount } from '../dataApi';
 import { ActionType } from '../../util/types';
 import { SessionsState } from './sessions.state';
 import { Post } from '../../models/post';
 
 export const loadConfData = () => async (dispatch: React.Dispatch<any>) => {
   const data = await getConfData();
+  const test = await componentDidMount();
+  console.log(test)
   dispatch(setData(data));
 }
 

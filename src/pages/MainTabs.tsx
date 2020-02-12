@@ -4,7 +4,7 @@ import { Route, Redirect } from 'react-router';
 import { addCircleOutline } from 'ionicons/icons';
 import MainView from './MainView';
 import Theme from './Theme';
-import CreateTheme from './CreateTheme';
+import CreatePost from './CreatePost';
 
 interface MainTabsProps { }
 
@@ -20,10 +20,10 @@ const MainTabs: React.FC<MainTabsProps> = () => {
         */}
         <Route path="/tabs/main" render={() => <MainView/>} exact={true} />
         <Route path="/tabs/theme" component={Theme} exact={true} />
-        <Route path="/tabs/create-theme" render={() => <CreateTheme/>} exact={true} />
+        <Route path="/tabs/create-post" render={() => <CreatePost/>} exact={true} />
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
-        <IonTabButton tab="Add" href="/tabs/create-theme">
+        <IonTabButton tab="Add" href="/tabs/create-post">
           <IonIcon icon={addCircleOutline} />
           <IonLabel>Add</IonLabel>
         </IonTabButton>

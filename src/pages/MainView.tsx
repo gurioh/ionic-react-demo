@@ -5,8 +5,8 @@ import { calendar, contacts, map, informationCircle, addCircle } from 'ionicons/
 
 import * as selectors from '../data/selectors';
 import { Post } from "../models/post";
-import PostList from "../components/PostList";
 import { addPost } from "../data/sessions/sessions.actions";
+import PostCard from "../components/PostCard";
 
 interface OwnProps { };
 
@@ -39,7 +39,10 @@ const MainView = ({ posts, addPost }: PostListProps) => {
 
               {posts.map(post => (
                 <IonCol size="12" size-md="6" key={post.id}>
-                  <PostList />
+                  <PostCard 
+                    key={post.id}
+                    post={post}
+                    />
                 </IonCol>
               ))}
             </IonRow>

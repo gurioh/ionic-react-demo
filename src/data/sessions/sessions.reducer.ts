@@ -7,6 +7,7 @@ export const sessionsReducer = (state: SessionsState, action: SessionsActions): 
       return { ...state, ...action.data };
     }
     case 'add-post': {
+      action.data.id = state.posts.length+1
       return { ...state, posts: [...(state.posts), action.data] };
     }
   }

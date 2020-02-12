@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Props } from "react";
 import { IonPage, IonHeader, IonToolbar, IonButtons, IonMenuButton, IonTitle, IonContent, IonList, IonGrid, IonRow, IonCol, IonTabBar, IonTabButton, IonIcon, IonLabel, IonBackButton, IonItem, IonInput, IonText, IonButton, IonItemDivider, IonTextarea, IonRippleEffect } from "@ionic/react";
 import { addPost } from "../data/sessions/sessions.actions";
 import { Post } from "../models/post";
 import { connect } from "../data/connect";
-import "./CreateTheme.scss";
+import "./CreatePost.scss";
+
+import * as selectors from '../data/selectors';
+import { RouteComponentProps, Route, useHistory } from "react-router";
+import {     } from 'react-router-dom';
 interface OwnProps { };
 
 interface StateProps {
     posts: Post[];
-    tests: number[];
 };
 
 interface DispatchProps {
@@ -17,30 +20,23 @@ interface DispatchProps {
 
 interface PostProps extends OwnProps, StateProps, DispatchProps { };
 
-const CreateTheme = ({ posts, addPost }: PostProps) => {
+const CreateTheme = ({ posts, addPost}: PostProps) => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
+    const history = useHistory()
     const data: Post = {
-        id: 6,
-        name: "string",
-        profilePic: "string",
-        twitter: "string",
-        about: "string",
-        location: "string",
-        email: "string",
-        phone: "string"
+        id: posts.length+1,
+        title: "",
+        content: "",
     }
 
     const addPostData = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (title && content) {
-            console.log(title)
-        }
-        data.name = title
-        data.about = content
-        addPost(data)
+        data.title = title
+        data.content = content
         console.log(data)
-        console.log('push')
+        addPost(data)
+        history.goBack()
     }
     return (
         <IonPage>
@@ -77,6 +73,9 @@ const CreateTheme = ({ posts, addPost }: PostProps) => {
 }
 
 export default connect<OwnProps, StateProps, DispatchProps>({
+    mapStateToProps: (state) => ({
+        posts: selectors.getPosts(state)
+      }),
     mapDispatchToProps: {
         addPost
     },
