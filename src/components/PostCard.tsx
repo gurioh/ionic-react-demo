@@ -37,7 +37,7 @@ const PostCard = ({post, deletePost}: PostCardProps) => {
       <IonCardContent class="outer-content">
         <IonLabel>{post.content}</IonLabel>
         <IonButton onClick = {() => deletePost(post.id)}> Delete</IonButton>
-        <IonButton onClick = {() => deletePost(post.id)}> Edit</IonButton>
+        <IonButton routerLink={`/tabs/detail-post/${post.id}`}> Edit</IonButton>
       </IonCardContent>
     </IonCard>
   );

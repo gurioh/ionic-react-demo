@@ -3,38 +3,40 @@ import { IonPage, IonHeader, IonToolbar, IonButtons, IonMenuButton, IonTitle, Io
 import { addPost, editPost } from "../data/sessions/sessions.actions";
 import { Post } from "../models/post";
 import { connect } from "../data/connect";
-import "./CreatePost.scss";
+import "./PostDetail.scss";
 
 import * as selectors from '../data/selectors';
-import { RouteComponentProps, Route, useHistory } from "react-router";
+import { RouteComponentProps, Route, useHistory, withRouter } from "react-router";
 import {     } from 'react-router-dom';
-interface OwnProps { };
+interface OwnProps extends RouteComponentProps { };
 
 interface StateProps {
+    post: Post;
 };
 
 interface DispatchProps {
-    addPost: typeof addPost
     editPost: typeof editPost
 };
 
-interface PostProps extends OwnProps, StateProps, DispatchProps { };
+type PostProps = OwnProps & StateProps & DispatchProps;
 
-const CreateTheme = ({ addPost, editPost}: PostProps) => {
+const PostDetail = ({ post, editPost}: PostProps) => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const history = useHistory()
     const data: Post = {
         id: 0,
         title: "",
-        content: "",
+        content: ""
     }
 
-    const addPostData = async (e: React.FormEvent) => {
+    const editPostData = async (e: React.FormEvent) => {
         e.preventDefault();
+        data.id = post.id
         data.title = title
         data.content = content
-        addPost(data)
+        console.log(data)
+        editPost(data)
         history.goBack()
     }
     return (
@@ -49,10 +51,11 @@ const CreateTheme = ({ addPost, editPost}: PostProps) => {
             </IonHeader>
             <IonContent>
                 <IonContent>
-                    <form noValidate onSubmit={addPostData}>
+                    <form noValidate onSubmit={editPostData}>
                         <IonItem>
                             <IonLabel> Title</IonLabel>
-                            <IonInput name="title" type="text" value={title} onIonChange={e => setTitle(e.detail.value!)} spellCheck={false} autocapitalize="off" required> </IonInput>
+                            <IonInput name="title" type="text" value={title} onIonChange={e => setTitle(e.detail.value!)} spellCheck={false} autocapitalize="off" required>
+                                {post?.title} </IonInput>
                         </IonItem>
                         <IonItemDivider>
                             <IonLabel>
@@ -61,10 +64,12 @@ const CreateTheme = ({ addPost, editPost}: PostProps) => {
                         </IonItemDivider>
                         <IonItem>
                             <IonLabel position="floating">Description</IonLabel>
-                            <IonTextarea name="content" value={content} onIonChange={e => setContent(e.detail.value!)}></IonTextarea>
+                            <IonTextarea name="content" value={content} onIonChange={e => setContent(e.detail.value!)}>
+                            {post?.content} 
+
+                            </IonTextarea>
                         </IonItem>
-                        <IonButton type="submit" expand="block">Add</IonButton>
-                        <IonButton onClick = {() => editPost(data)}> Delete</IonButton>
+                        <IonButton type="submit" expand="block">Edit</IonButton>
                     </form>
                 </IonContent>
             </IonContent>
@@ -72,10 +77,13 @@ const CreateTheme = ({ addPost, editPost}: PostProps) => {
     );
 }
 
-export default connect<OwnProps, StateProps, DispatchProps>({
+export default connect({
+    mapStateToProps: (state, OwnProps) => ({
+        post: selectors.getPost(state, OwnProps)
+    }),
     mapDispatchToProps: {
         addPost,
         editPost
     },
-    component: React.memo(CreateTheme)
+    component: withRouter(PostDetail)
 });

@@ -5,6 +5,7 @@ import { addCircleOutline } from 'ionicons/icons';
 import MainView from './MainView';
 import Theme from './Theme';
 import CreatePost from './CreatePost';
+import PostDetail from './PostDetail';
 
 interface MainTabsProps { }
 
@@ -21,6 +22,7 @@ const MainTabs: React.FC<MainTabsProps> = () => {
         <Route path="/tabs/main" render={() => <MainView/>} exact={true} />
         <Route path="/tabs/theme" component={Theme} exact={true} />
         <Route path="/tabs/create-post" render={() => <CreatePost/>} exact={true} />
+        <Route path="/tabs/detail-post/:id" component={PostDetail} exact={true} />
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
         <IonTabButton tab="Add" href="/tabs/create-post">
