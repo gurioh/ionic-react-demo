@@ -21,18 +21,22 @@ interface DispatchProps {
 type PostProps = OwnProps & StateProps & DispatchProps;
 
 const PostDetail = ({ post, editPost}: PostProps) => {
-    const [title, setTitle] = useState('');
-    const [content, setContent] = useState('');
+    const [title, setTitle] = useState(post.title);
+    const [content, setContent] = useState(post.content);
     const history = useHistory()
+
+    useEffect(()=>{
+        console.log(title, content)
+    },[]) 
+
     const data: Post = {
-        id: 0,
-        title: "",
+        id:  post.id,
+        title: post.title,
         content: ""
     }
 
     const editPostData = async (e: React.FormEvent) => {
         e.preventDefault();
-        data.id = post.id
         data.title = title
         data.content = content
         console.log(data)
@@ -54,19 +58,12 @@ const PostDetail = ({ post, editPost}: PostProps) => {
                     <form noValidate onSubmit={editPostData}>
                         <IonItem>
                             <IonLabel> Title</IonLabel>
-                            <IonInput name="title" type="text" value={title} onIonChange={e => setTitle(e.detail.value!)} spellCheck={false} autocapitalize="off" required>
-                                {post?.title} </IonInput>
+                            <IonInput name="title" type="text" value={title} onIonChange={e => setTitle(e.detail.value!)} 
+                            spellCheck={false} autocapitalize="off" required>
+                            </IonInput>
                         </IonItem>
-                        <IonItemDivider>
-                            <IonLabel>
-                                Category
-                            </IonLabel>
-                        </IonItemDivider>
                         <IonItem>
-                            <IonLabel position="floating">Description</IonLabel>
-                            <IonTextarea name="content" value={content} onIonChange={e => setContent(e.detail.value!)}>
-                            {post?.content} 
-
+                            <IonTextarea rows={6} cols={20} name="content" value={content}  onIonChange={e => setContent(e.detail.value!)}>
                             </IonTextarea>
                         </IonItem>
                         <IonButton type="submit" expand="block">Edit</IonButton>

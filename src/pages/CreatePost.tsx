@@ -11,6 +11,7 @@ import {     } from 'react-router-dom';
 interface OwnProps { };
 
 interface StateProps {
+    posts: Post[]
 };
 
 interface DispatchProps {
@@ -20,7 +21,7 @@ interface DispatchProps {
 
 interface PostProps extends OwnProps, StateProps, DispatchProps { };
 
-const CreateTheme = ({ addPost, editPost}: PostProps) => {
+const CreateTheme = ({ posts,addPost, editPost}: PostProps) => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const history = useHistory()
@@ -32,6 +33,11 @@ const CreateTheme = ({ addPost, editPost}: PostProps) => {
 
     const addPostData = async (e: React.FormEvent) => {
         e.preventDefault();
+        if(posts.length == 0){
+            data.id = 0;    
+        }else{
+            data.id = posts.slice(-1)[0].id+1 
+        }
         data.title = title
         data.content = content
         addPost(data)
@@ -64,7 +70,6 @@ const CreateTheme = ({ addPost, editPost}: PostProps) => {
                             <IonTextarea name="content" value={content} onIonChange={e => setContent(e.detail.value!)}></IonTextarea>
                         </IonItem>
                         <IonButton type="submit" expand="block">Add</IonButton>
-                        <IonButton onClick = {() => editPost(data)}> Delete</IonButton>
                     </form>
                 </IonContent>
             </IonContent>
@@ -73,6 +78,9 @@ const CreateTheme = ({ addPost, editPost}: PostProps) => {
 }
 
 export default connect<OwnProps, StateProps, DispatchProps>({
+    mapStateToProps: (state) => ({
+        posts: selectors.getPosts(state)
+    }),
     mapDispatchToProps: {
         addPost,
         editPost

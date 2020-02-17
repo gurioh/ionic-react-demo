@@ -4,6 +4,7 @@ import { sessionsReducer } from './sessions/sessions.reducer';
 export const initialState: AppState = {
   data: {
     posts: [],
+    books: []
   }
 };
 

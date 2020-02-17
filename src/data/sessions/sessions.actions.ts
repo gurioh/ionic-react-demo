@@ -5,7 +5,7 @@ import { Post } from '../../models/post';
 
 export const loadConfData = () => async (dispatch: React.Dispatch<any>) => {
   const data = await getConfData();
-  const test = await componentDidMount();
+  // const test = await componentDidMount();
   dispatch(setData(data));
 }
 
