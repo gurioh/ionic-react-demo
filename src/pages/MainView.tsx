@@ -7,22 +7,36 @@ import * as selectors from '../data/selectors';
 import { Post } from "../models/post";
 import { deletePost, editPost } from "../data/sessions/sessions.actions";
 import PostCard from "../components/PostCard";
+import { Book } from "../models/book";
+import { Books } from "../models/books";
 
 interface OwnProps { };
 
 interface StateProps {
   posts: Post[];
+  books: Books;
 };
 
 interface DispatchProps {
   deletePost: typeof deletePost
   editPost: typeof editPost
- };
+};
 
 interface PostListProps extends OwnProps, StateProps, DispatchProps { };
 
-const MainView = ({ posts,  deletePost, editPost }: PostListProps) => {
+const MainView = ({ books, posts, deletePost, editPost }: PostListProps) => {
 
+  const booksd = books as Books
+  useEffect(() => {
+    console.log("useEffect")
+    console.log(
+      books.data
+    );
+
+    return () => {
+      console.log('clean')
+    }
+  });
   return (
     <IonPage>
       <IonHeader>
@@ -37,14 +51,18 @@ const MainView = ({ posts,  deletePost, editPost }: PostListProps) => {
         <IonList>
           <IonGrid fixed>
             <IonRow align-items-stretch>
-
+              {books.data.documents.map(book => (
+                <IonCol size="12" size-md="6">
+                  <label>{book.title}</label>
+                </IonCol>
+              ))}
               {posts.map(post => (
                 <IonCol size="12" size-md="6" key={post.id}>
-                  <PostCard 
+                  <PostCard
                     key={post.id}
                     post={post}
-                    deletePost = {deletePost}
-                    />
+                    deletePost={deletePost}
+                  />
                 </IonCol>
               ))}
             </IonRow>
@@ -58,7 +76,8 @@ const MainView = ({ posts,  deletePost, editPost }: PostListProps) => {
 
 export default connect<OwnProps, StateProps, DispatchProps>({
   mapStateToProps: (state) => ({
-    posts: selectors.getPosts(state)
+    posts: selectors.getPosts(state),
+    books: selectors.getBooks(state)
   }),
   mapDispatchToProps: {
     deletePost,

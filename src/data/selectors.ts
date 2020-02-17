@@ -4,6 +4,7 @@ import { Post } from '../models/post';
 import { AppState } from './state';
 
 export const getPosts = (state: AppState) => state.data.posts;
+export const getBooks = (state: AppState) => state.data.books;
 
 
 const getIdParam = (_state: AppState, props: any) => {
