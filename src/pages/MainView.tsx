@@ -7,8 +7,10 @@ import * as selectors from '../data/selectors';
 import { Post } from "../models/post";
 import { deletePost, editPost } from "../data/sessions/sessions.actions";
 import PostCard from "../components/PostCard";
-import { Book } from "../models/book";
+import Book from "../components/BookList";
 import { Books } from "../models/books";
+import BookList from "../components/BookList";
+
 
 interface OwnProps { };
 
@@ -53,9 +55,14 @@ const MainView = ({ books, posts, deletePost, editPost }: PostListProps) => {
             <IonRow align-items-stretch>
               {books.data.documents.map(book => (
                 <IonCol size="12" size-md="6">
-                  <label>{book.title}</label>
+                  <BookList
+                    book={book}
+                    deletePost={deletePost}
+                  />
                 </IonCol>
-              ))}
+              ))
+              }
+
               {posts.map(post => (
                 <IonCol size="12" size-md="6" key={post.id}>
                   <PostCard
