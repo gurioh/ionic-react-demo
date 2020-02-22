@@ -1,13 +1,14 @@
 import React, { useEffect } from "react";
 import { IonCard, IonCardHeader, IonItem, IonCardContent, IonAvatar, IonReorder, IonLabel, IonReorderGroup, IonBadge, IonButton, IonCol, IonHeader, IonContent, IonPage, IonList, IonGrid, IonRow } from "@ionic/react";
 import { ItemReorderEventDetail } from '@ionic/core';
-import { deletePost, addToCart, getBook } from "../data/sessions/sessions.actions";
-import { Book } from "../models/book";
+import { deletePost, addToCart, getBook } from "../../data/sessions/sessions.actions";
+import { Book } from "../../models/book";
 
-import * as selectors from '../data/selectors';
-import { connect } from "../data/connect";
-import { Books } from "../models/books";
-import BookCard from "../components/BookCard";
+import * as selectors from '../../data/selectors';
+import { connect } from "../../data/connect";
+import { Books } from "../../models/books";
+import BookCard from "../../components/BookCard";
+import { Order } from "../../models/order";
 
 interface OwnProps {
 
@@ -15,18 +16,17 @@ interface OwnProps {
 
 interface StateProps {
   books: Books;
+  order: Order;
 }
 
 
 interface DispatchProps {
-  addToCart: typeof addToCart;
-  getBook: typeof getBook;
 }
 
 
 interface BookListProps extends OwnProps, StateProps, DispatchProps { };
 
-const BookList = ({ books, addToCart, getBook }: BookListProps) => {
+const OrderList = ({ order, books}: BookListProps) => {
   function doReorder(event: CustomEvent<ItemReorderEventDetail>) {
     // The `from` and `to` properties contain the index of the item
     // when the drag started and ended, respectively
@@ -50,14 +50,12 @@ const BookList = ({ books, addToCart, getBook }: BookListProps) => {
         <IonList>
           <IonGrid fixed>
             <IonRow align-items-stretch>
-              {books.data.documents.map(book => (
-                <IonCol size="12" size-md="12">
-                  <BookCard
-                    book={book}
-                    addToCart={addToCart}
-                    getBook={getBook}
-                  />
-                </IonCol>
+              <IonLabel> {order.id}</IonLabel>
+              {order.userId}
+              {order.items.map(book => (
+                <IonItem>
+                  <IonLabel>{book.bookId} {book.amount}</IonLabel>
+                </IonItem>
               ))
               }
             </IonRow>
@@ -71,11 +69,10 @@ const BookList = ({ books, addToCart, getBook }: BookListProps) => {
 
 export default connect<OwnProps, StateProps, DispatchProps>({
   mapStateToProps: (state) => ({
-    books: selectors.getBooks(state)
+    books: selectors.getBooks(state),
+    order: selectors.getOrder(state)
   }),
   mapDispatchToProps: {
-    addToCart,
-    getBook
   },
-  component: React.memo(BookList)
+  component: React.memo(OrderList)
 });

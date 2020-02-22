@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
 import { IonCard, IonCardHeader, IonItem, IonCardContent, IonAvatar, IonReorder, IonLabel, IonReorderGroup, IonBadge, IonButton, IonCol, IonHeader, IonContent, IonPage, IonList, IonGrid, IonRow } from "@ionic/react";
 import { ItemReorderEventDetail } from '@ionic/core';
-import { deletePost, addToCart, getBook } from "../data/sessions/sessions.actions";
-import { Book } from "../models/book";
+import { deletePost, addToCart, getBook } from "../../data/sessions/sessions.actions";
+import { Book } from "../../models/book";
 
-import * as selectors from '../data/selectors';
-import { connect } from "../data/connect";
-import { Books } from "../models/books";
-import BookCard from "../components/BookCard";
-import { Order } from "../models/order";
+import * as selectors from '../../data/selectors';
+import { connect } from "../../data/connect";
+import { Books } from "../../models/books";
+import BookCard from "../../components/BookCard";
+import SearchBook from "../../components/SearchBook";
 
 interface OwnProps {
 
@@ -16,17 +16,18 @@ interface OwnProps {
 
 interface StateProps {
   books: Books;
-  order: Order;
 }
 
 
 interface DispatchProps {
+  addToCart: typeof addToCart;
+  getBook: typeof getBook;
 }
 
 
 interface BookListProps extends OwnProps, StateProps, DispatchProps { };
 
-const OrderList = ({ order, books}: BookListProps) => {
+const BookList = ({ books, addToCart, getBook }: BookListProps) => {
   function doReorder(event: CustomEvent<ItemReorderEventDetail>) {
     // The `from` and `to` properties contain the index of the item
     // when the drag started and ended, respectively
@@ -38,7 +39,7 @@ const OrderList = ({ order, books}: BookListProps) => {
     event.detail.complete();
   }
   useEffect(() => {
-    
+
   }, [])
 
   return (
@@ -48,14 +49,19 @@ const OrderList = ({ order, books}: BookListProps) => {
       </IonHeader>
       <IonContent>
         <IonList>
+          <SearchBook>
+
+          </SearchBook>
           <IonGrid fixed>
             <IonRow align-items-stretch>
-              <IonLabel> {order.id}</IonLabel>
-              {order.userId}
-              {order.items.map(book => (
-                <IonItem>
-                  <IonLabel>{book.bookId} {book.amount}</IonLabel>
-                </IonItem>
+              {books.data.documents.map(book => (
+                <IonCol size="12" size-md="12">
+                  <BookCard
+                    book={book}
+                    addToCart={addToCart}
+                    getBook={getBook}
+                  />
+                </IonCol>
               ))
               }
             </IonRow>
@@ -69,10 +75,11 @@ const OrderList = ({ order, books}: BookListProps) => {
 
 export default connect<OwnProps, StateProps, DispatchProps>({
   mapStateToProps: (state) => ({
-    books: selectors.getBooks(state),
-    order: selectors.getOrder(state)
+    books: selectors.getBooks(state)
   }),
   mapDispatchToProps: {
+    addToCart,
+    getBook
   },
-  component: React.memo(OrderList)
+  component: React.memo(BookList)
 });

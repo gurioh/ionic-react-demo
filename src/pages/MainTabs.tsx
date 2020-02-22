@@ -6,9 +6,9 @@ import MainView from './MainView';
 import Theme from './Theme';
 import CreatePost from './CreatePost';
 import PostDetail from './PostDetail';
-import BookList from './BookList';
-import OrderList from './OrderList';
-import CartList from './CartList';
+import BookList from './book/BookList';
+import OrderList from './book/OrderList';
+import CartList from './book/CartList';
 
 interface MainTabsProps { }
 
@@ -33,7 +33,7 @@ const MainTabs: React.FC<MainTabsProps> = () => {
       <IonTabBar slot="bottom">
         <IonTabButton tab="Add" href="/tabs/create-post">
           <IonIcon icon={addCircleOutline} />
-          <IonLabel>Add</IonLabel>
+          <IonLabel>Search</IonLabel>
         </IonTabButton>
         <IonTabButton tab="shop" href="/myOrder">
           <IonIcon icon={addCircleOutline} />

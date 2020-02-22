@@ -1,15 +1,15 @@
 import React, { useEffect } from "react";
 import { IonCard, IonCardHeader, IonItem, IonCardContent, IonAvatar, IonReorder, IonLabel, IonReorderGroup, IonBadge, IonButton, IonCol, IonHeader, IonContent, IonPage, IonList, IonGrid, IonRow, IonCheckbox } from "@ionic/react";
 import { ItemReorderEventDetail } from '@ionic/core';
-import { deletePost, addToCart, getBook } from "../data/sessions/sessions.actions";
-import { Book } from "../models/book";
+import { deletePost, addToCart, getBook } from "../../data/sessions/sessions.actions";
+import { Book } from "../../models/book";
 
-import * as selectors from '../data/selectors';
-import { connect } from "../data/connect";
-import { Books } from "../models/books";
-import BookCard from "../components/BookCard";
-import { Order } from "../models/order";
-import { Cart } from "../models/cart";
+import * as selectors from '../../data/selectors';
+import { connect } from "../../data/connect";
+import { Books } from "../../models/books";
+import BookCard from "../../components/BookCard";
+import { Order } from "../../models/order";
+import { Cart } from "../../models/cart";
 
 interface OwnProps {
 
