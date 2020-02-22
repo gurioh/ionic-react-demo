@@ -2,6 +2,7 @@ import { getConfData, componentDidMount } from '../dataApi';
 import { ActionType } from '../../util/types';
 import { SessionsState } from './sessions.state';
 import { Post } from '../../models/post';
+import { Book } from '../../models/book';
 
 export const loadConfData = () => async (dispatch: React.Dispatch<any>) => {
   const data = await getConfData();
@@ -29,8 +30,21 @@ export const editPost = (data: Post) => ({
   data
 } as const)
 
+export const getBook = (data: Book) => ({
+  type: 'get-book',
+  data
+} as const)
+
+export const addToCart = (data: Book) => ({
+  type: 'add-book',
+  data
+} as const)
+
+
 export type SessionsActions =
   | ActionType<typeof setData>
   | ActionType<typeof addPost>
   | ActionType<typeof deletePost>
   | ActionType<typeof editPost>
+  | ActionType<typeof getBook>
+  | ActionType<typeof addToCart>

@@ -1,6 +1,8 @@
 export interface Book {
+    bookId: number;
     authors: string[];
     datetime: string;
+    contents: string;
     isbn: string;
     price: number;
     publisher: string;

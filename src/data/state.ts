@@ -1,10 +1,11 @@
 import { combineReducers } from './combineReducers';
 import { sessionsReducer } from './sessions/sessions.reducer';
-import { book } from 'ionicons/icons';
+import { book, cart } from 'ionicons/icons';
 import { getBooks } from './selectors';
 
 export const initialState: AppState = {
   data: {
+    userId: "admin",
     posts: [],
     books: {
       data: {
@@ -15,6 +16,14 @@ export const initialState: AppState = {
           "total_count": 4308
         }
       }
+    },
+    cart: {
+      item:[]
+    },
+    order: {
+      id: 0,
+      userId: "admin",
+      items:[]
     }
   }
 };
