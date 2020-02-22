@@ -1,6 +1,7 @@
 import { Post } from '../models/post';
 import { Book } from '../models/book';
 import { Books } from '../models/books';
+import { IonItem } from '@ionic/react';
 
 const postsUrl = '/assets/data/posts.json';
 const kakaoBookUrl = 'http://localhost:3001/kakao?query=Java&size=3&page=1&sort=accuracy&target=title';
@@ -30,8 +31,17 @@ export const getConfData = async () => {
         fetch(kakaoBookUrl)]);
 
     const posts = await response[0].json() as Post[];
-    const books = await responseKakao[0].json() as Books;
+    var books = await responseKakao[0].json() as Books;
 
+    books.data.documents = books.data.documents.map((item,index) =>{
+      console.log({
+        ...item, bookId: index
+      })
+        return {
+          ...item, bookId: index
+        }
+      }
+    )
     console.log(books)
     const data = {
       posts,

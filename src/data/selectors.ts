@@ -5,6 +5,8 @@ import { AppState } from './state';
 
 export const getPosts = (state: AppState) => state.data.posts;
 export const getBooks = (state: AppState) => state.data.books;
+export const getOrder = (state: AppState) => state.data.order;
+export const getCart = (state: AppState) => state.data.cart;
 
 
 const getIdParam = (_state: AppState, props: any) => {

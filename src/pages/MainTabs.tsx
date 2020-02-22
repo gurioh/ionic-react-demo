@@ -7,6 +7,8 @@ import Theme from './Theme';
 import CreatePost from './CreatePost';
 import PostDetail from './PostDetail';
 import BookList from './BookList';
+import OrderList from './OrderList';
+import CartList from './CartList';
 
 interface MainTabsProps { }
 
@@ -25,11 +27,21 @@ const MainTabs: React.FC<MainTabsProps> = () => {
         <Route path="/tabs/create-post" render={() => <CreatePost/>} exact={true} />
         <Route path="/tabs/detail-post/:id" component={PostDetail} exact={true} />
         <Route path="/book/search" render={() => <BookList/>} exact={true} />
+        <Route path="/myOrder" render={() => <OrderList/>} exact={true} />
+        <Route path="/myCart" render={() => <CartList/>} exact={true} />
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
         <IonTabButton tab="Add" href="/tabs/create-post">
           <IonIcon icon={addCircleOutline} />
           <IonLabel>Add</IonLabel>
+        </IonTabButton>
+        <IonTabButton tab="shop" href="/myOrder">
+          <IonIcon icon={addCircleOutline} />
+          <IonLabel>Order</IonLabel>
+        </IonTabButton>
+        <IonTabButton tab="shop" href="/myCart">
+          <IonIcon icon={addCircleOutline} />
+          <IonLabel>Cart</IonLabel>
         </IonTabButton>
       </IonTabBar>
     </IonTabs>
