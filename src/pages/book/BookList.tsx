@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
-import { IonCard, IonCardHeader, IonItem, IonCardContent, IonAvatar, IonReorder, IonLabel, IonReorderGroup, IonBadge, IonButton, IonCol, IonHeader, IonContent, IonPage, IonList, IonGrid, IonRow } from "@ionic/react";
+import { IonCard, IonCardHeader, IonItem, IonCardContent, IonAvatar, IonReorder, IonLabel, IonReorderGroup, IonBadge, IonButton, IonCol, IonHeader, IonContent, IonPage, IonList, IonGrid, IonRow, IonIcon } from "@ionic/react";
 import { ItemReorderEventDetail } from '@ionic/core';
 import { deletePost, addToCart, getBook, searchBook } from "../../data/sessions/sessions.actions";
-import { Book } from "../../models/book";
 
 import * as selectors from '../../data/selectors';
 import { connect } from "../../data/connect";
 import { Books } from "../../models/books";
 import BookCard from "../../components/BookCard";
 import SearchBookBar from "../../components/SearchBookBar";
+import {arrowForward, arrowBack } from "ionicons/icons";
 
 interface OwnProps {
 
@@ -39,6 +39,15 @@ const BookList = ({ books, addToCart, getBook, searchBook }: BookListProps) => {
     // by the reorder group
     event.detail.complete();
   }
+
+  const leftClick = ()=>{
+    console.log("click left")
+  }
+
+  const rightClick = ()=>{
+    console.log("click right")
+  }
+  
   useEffect(() => {
 
   }, [])
@@ -59,6 +68,7 @@ const BookList = ({ books, addToCart, getBook, searchBook }: BookListProps) => {
               {books.data.documents.map(book => (
                 <IonCol size="12" size-md="12">
                   <BookCard
+                    key={book.bookId}
                     book={book}
                     addToCart={addToCart}
                     getBook={getBook}
@@ -66,6 +76,8 @@ const BookList = ({ books, addToCart, getBook, searchBook }: BookListProps) => {
                 </IonCol>
               ))
               }
+                  <IonIcon size="large" icon={arrowBack} onClick={leftClick}/>
+                  <IonIcon size="large" icon={arrowForward} onClick={rightClick} />
             </IonRow>
           </IonGrid>
         </IonList>

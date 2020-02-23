@@ -35,11 +35,11 @@ const MainTabs: React.FC<MainTabsProps> = () => {
           <IonIcon icon={addCircleOutline} />
           <IonLabel>Search</IonLabel>
         </IonTabButton>
-        <IonTabButton tab="shop" href="/myOrder">
+        <IonTabButton tab="Order" href="/myOrder">
           <IonIcon icon={addCircleOutline} />
           <IonLabel>Order</IonLabel>
         </IonTabButton>
-        <IonTabButton tab="shop" href="/myCart">
+        <IonTabButton tab="Cart" href="/myCart">
           <IonIcon icon={addCircleOutline} />
           <IonLabel>Cart</IonLabel>
         </IonTabButton>
