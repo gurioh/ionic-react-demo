@@ -2,9 +2,11 @@ import { Post } from '../models/post';
 import { Book } from '../models/book';
 import { Books } from '../models/books';
 import { IonItem } from '@ionic/react';
+import { searchCondition } from '../models/searchCondition';
+import qs from 'query-string';
 
 const postsUrl = '/assets/data/posts.json';
-const kakaoBookUrl = 'http://localhost:3001/kakao?query=Java&size=3&page=1&sort=accuracy&target=title';
+const kakaoBookUrl = 'http://localhost:3001/kakao?';
 export const componentDidMount = async ()=>{
   fetch('http://localhost:3001/users')
   .then(res => res.json())
@@ -13,14 +15,17 @@ export const componentDidMount = async ()=>{
   })
   .catch(console.log)
 }
-export const getKakaoBookData = async ()=>{
-  fetch('http://localhost:3001/kakao?query=Java&size=3&page=1&sort=accuracy&target=title')
-  .then(res => res.json())
-  .then((data) => {
-    console.log(data.body.documents)
-  return data.body.documents
-  })
-  .catch(console.log)
+export const getKakaoBookData = async (searchCondition: searchCondition)=>{
+  
+  const query = qs.stringify(searchCondition);
+  const responseKakao = await Promise.all([
+    fetch(kakaoBookUrl+query)]);
+  var books = await responseKakao[0].json() as Books;
+
+  const data = {
+    books
+  }
+  return data;
 }
 
 
@@ -30,22 +35,25 @@ export const getConfData = async () => {
     const responseKakao = await Promise.all([
         fetch(kakaoBookUrl)]);
 
+        console.log(responseKakao)
     const posts = await response[0].json() as Post[];
-    var books = await responseKakao[0].json() as Books;
-
-    books.data.documents = books.data.documents.map((item,index) =>{
-      console.log({
-        ...item, bookId: index
-      })
-        return {
-          ...item, bookId: index
-        }
-      }
-    )
-    console.log(books)
+    // var books = await responseKakao[0].json() as Books;
+    // console.log(books.data)
+    
+    // if(books.data !== null){
+    //   books.data.documents = books.data.documents.map((item,index) =>{
+    //     console.log({
+    //       ...item, bookId: index
+    //     })
+    //       return {
+    //         ...item, bookId: index
+    //       }
+    //     }
+    //   )
+    //   console.log(books)
+    // }
     const data = {
-      posts,
-      books
+      posts
     }
     return data;
   }

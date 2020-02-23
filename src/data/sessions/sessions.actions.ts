@@ -1,4 +1,4 @@
-import { getConfData, componentDidMount } from '../dataApi';
+import { getConfData, componentDidMount, getKakaoBookData } from '../dataApi';
 import { ActionType } from '../../util/types';
 import { SessionsState } from './sessions.state';
 import { Post } from '../../models/post';
@@ -6,6 +6,14 @@ import { Book } from '../../models/book';
 
 export const loadConfData = () => async (dispatch: React.Dispatch<any>) => {
   const data = await getConfData();
+  // const test = await componentDidMount();
+  dispatch(setData(data));
+}
+
+export const searchBook = (query: any) => async (dispatch: React.Dispatch<any>) => {
+  console.log("starta'")
+  const data = await getKakaoBookData(query);
+  console.log(data)
   // const test = await componentDidMount();
   dispatch(setData(data));
 }

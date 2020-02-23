@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
 import { IonCard, IonCardHeader, IonItem, IonCardContent, IonAvatar, IonReorder, IonLabel, IonReorderGroup, IonBadge, IonButton, IonCol, IonHeader, IonContent, IonPage, IonList, IonGrid, IonRow } from "@ionic/react";
 import { ItemReorderEventDetail } from '@ionic/core';
-import { deletePost, addToCart, getBook } from "../../data/sessions/sessions.actions";
+import { deletePost, addToCart, getBook, searchBook } from "../../data/sessions/sessions.actions";
 import { Book } from "../../models/book";
 
 import * as selectors from '../../data/selectors';
 import { connect } from "../../data/connect";
 import { Books } from "../../models/books";
 import BookCard from "../../components/BookCard";
-import SearchBook from "../../components/SearchBook";
+import SearchBookBar from "../../components/SearchBookBar";
 
 interface OwnProps {
 
@@ -22,12 +22,13 @@ interface StateProps {
 interface DispatchProps {
   addToCart: typeof addToCart;
   getBook: typeof getBook;
+  searchBook: typeof searchBook;
 }
 
 
 interface BookListProps extends OwnProps, StateProps, DispatchProps { };
 
-const BookList = ({ books, addToCart, getBook }: BookListProps) => {
+const BookList = ({ books, addToCart, getBook, searchBook }: BookListProps) => {
   function doReorder(event: CustomEvent<ItemReorderEventDetail>) {
     // The `from` and `to` properties contain the index of the item
     // when the drag started and ended, respectively
@@ -49,9 +50,10 @@ const BookList = ({ books, addToCart, getBook }: BookListProps) => {
       </IonHeader>
       <IonContent>
         <IonList>
-          <SearchBook>
+          <SearchBookBar
+            searchBook={searchBook}
+          />
 
-          </SearchBook>
           <IonGrid fixed>
             <IonRow align-items-stretch>
               {books.data.documents.map(book => (
@@ -79,7 +81,8 @@ export default connect<OwnProps, StateProps, DispatchProps>({
   }),
   mapDispatchToProps: {
     addToCart,
-    getBook
+    getBook,
+    searchBook
   },
   component: React.memo(BookList)
 });
